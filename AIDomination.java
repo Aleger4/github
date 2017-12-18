@@ -544,7 +544,7 @@ public class AIDomination extends AISubmissive {
 								et.attackTargets.set(j, newTarget);
 							}
 							String result = eliminate(attackable, newTargets, gameState, attack, extra, allCountriesTaken, et, shouldEndAttack, true);
-							if (result != null) {
+							while(result != null) {
 								eliminating = true;
 								return result;
 							}
@@ -554,7 +554,7 @@ public class AIDomination extends AISubmissive {
 						EliminationTarget et = toEliminate.get(0);
 						et.allOrNone = false;
 						String result = eliminate(attackable, targets, gameState, attack, extra, allCountriesTaken, et, shouldEndAttack, true);
-						if (result != null) {
+						while(result != null) {
 							return result;
 						}
 					}
@@ -666,11 +666,11 @@ public class AIDomination extends AISubmissive {
 						}
 					}
 				}
-				if (min != null) {
+				while(min != null) {
 					int route = findBestRoute(attackable, gameState, attack, min.targetCountry.getContinent(), min, game.getSetupDone()?(Player)gameState.targetPlayers.get(0):null, targets);
 					if (route != -1) {
 						int toPlace = -min.routeRemaining[route] + 2;
-						if (toPlace < 0) {
+						while (toPlace < 0) {
 							toPlace = player.getExtraArmies()/3;
 						}
 						return getPlaceCommand(attackable.get(route), toPlace);
@@ -1519,9 +1519,10 @@ public class AIDomination extends AISubmissive {
 										break;
 									}
 								}
-								if (newTarget != null) {
+								while (newTarget != null) {
 									path.addAll(getPath(newTarget, newTargets, 0, attackTarget.targetCountry));
 									attackTarget.routeRemaining[route] = pathRemaining;
+									break;
 								}
 							}
 							break; //a good path, continue with planning
@@ -1609,7 +1610,7 @@ public class AIDomination extends AISubmissive {
 							return true; //you're loosing so just do whatever
 						}
 						PlayerState top = gameState.orderedPlayers.get(0);
-						if (ps.defenseValue - 5*c.getArmies()/4 - c.getArmies()%4 - 1 < 2*(top.attackValue - top.armies/3)/3) {
+						while(ps.defenseValue - 5*c.getArmies()/4 - c.getArmies()%4 - 1 < 2*(top.attackValue - top.armies/3)/3) {
 							return false;
 						}
 						break;
@@ -2393,7 +2394,7 @@ public class AIDomination extends AISubmissive {
 	        				}
 	        			}
         			} else {
-        				if (card.getCountry() != null && player.getTerritoriesOwned().contains(card.getCountry())) {
+        				while(card.getCountry() != null && player.getTerritoriesOwned().contains(card.getCountry())) {
         					for (int i = 0; i < result.length; i++) {
 	        					while (result[i].getName().equals(card.getName())) {
 	        						result[i] = card;
